@@ -1,0 +1,69 @@
+apply plugin: 'com.android.application'
+apply plugin: 'android-apt'
+
+def WORLD_WEATHER_ONLINE_API_KEY = '"' + WorldWeatherOnlineApiKey + '"' ?: '"Define World WeatherCondition Online Api Key"';
+def OPEN_WEATHER_MAP_API_KEY = '"' + OpenWeatherMapApiKey + '"' ?: '"Define Open WeatherCondition Map Api Key"';
+
+android {
+    compileSdkVersion rootProject.ext.compileSdkVersion
+    buildToolsVersion rootProject.ext.buildToolsVersion
+
+    defaultConfig {
+        applicationId "br.com.cemobilebr.weatherapp"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode 1
+        versionName "1.0"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+android.buildTypes.each {
+    it.buildConfigField 'String', 'WORLD_WEATHER_ONLINE_API_KEY', WORLD_WEATHER_ONLINE_API_KEY
+    it.buildConfigField 'String', 'OPEN_WEATHER_MAP_API_KEY', OPEN_WEATHER_MAP_API_KEY
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    // Apps' dependencies
+    compile "com.android.support:appcompat-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:design:$rootProject.supportLibraryVersion"
+    compile "com.android.support:recyclerview-v7:$rootProject.supportLibraryVersion"
+    compile "com.android.support:cardview-v7:$rootProject.supportLibraryVersion"
+
+    compile "com.fasterxml.jackson.core:jackson-core:$rootProject.jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-annotations:$rootProject.jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$rootProject.jacksonVersion"
+
+    compile "com.squareup.retrofit2:retrofit:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:converter-jackson:$rootProject.retrofitVersion"
+    compile "com.squareup.retrofit2:adapter-rxjava:$rootProject.retrofitVersion"
+
+    compile "io.reactivex:rxjava:$rootProject.rxJavaVersion"
+    compile "io.reactivex:rxandroid:$rootProject.rxAndroidVersion"
+
+    compile "com.squareup.okhttp3:logging-interceptor:$rootProject.okHttpVersion"
+
+    compile "io.paperdb:paperdb:$rootProject.paperDbVersion"
+
+    compile "com.jakewharton:butterknife:$rootProject.butterKnifeVersion"
+    apt "com.jakewharton:butterknife-compiler:$rootProject.butterKnifeVersion"
+
+    compile "com.squareup.picasso:picasso:$rootProject.picassoVersion"
+
+    // Tests' dependencies
+    testCompile "junit:junit:$rootProject.junitVersion"
+
+    androidTestCompile "com.jayway.android.robotium:robotium-solo:$rootProject.robotiumVersion"
+}
