@@ -15,12 +15,6 @@ import br.com.cemobilebr.weatherapp.Constants;
  * Created by cemobilebr.
  */
 public class Utils {
-
-    // https://github.com/martykan/forecastie/blob/master/app/src/main/java/cz/martykan/forecastie/WeatherRecyclerAdapter.java
-    // https://github.com/marcellogalhardo/Android-Code-Challenge/blob/master/app/src/main/java/br/com/mgalhardo/guidebook/ui/guidelist/GuideListPresenter.java
-    // https://github.com/TomasKostadinov/AndroidWeatherApp
-    // https://github.com/TylerMcCraw/android-weather
-
     /**
      * Returns a drawable resource id related to name informed.
      *
