@@ -46,8 +46,8 @@ public class WeatherForecastPresenter implements WeatherForecastContract.Present
 
             @Override
             public void onError(Throwable e) {
-                Log.e(TAG, "[onError]message=" + e.getMessage());
                 e.printStackTrace();
+                view.showErrorLayout();
             }
 
             @Override
@@ -69,7 +69,7 @@ public class WeatherForecastPresenter implements WeatherForecastContract.Present
     }
 
     @Override
-    public void retryButtonClick() {
-
+    public void retryButtonClick(String cityId) {
+        loadForecasts(cityId);
     }
 }

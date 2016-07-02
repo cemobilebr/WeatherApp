@@ -65,6 +65,7 @@ public class WeatherListPresenter implements WeatherListContract.Presenter {
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                view.showErrorLayout();
             }
 
             @Override

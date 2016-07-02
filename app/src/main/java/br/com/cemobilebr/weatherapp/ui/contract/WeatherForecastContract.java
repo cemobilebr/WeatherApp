@@ -25,8 +25,6 @@ public interface WeatherForecastContract {
 
         void showEmptyLayout();
 
-        //void addFragment(Context context);
-
     }
 
     public interface Presenter {
@@ -39,7 +37,7 @@ public interface WeatherForecastContract {
 
         void refreshUi();
 
-        void retryButtonClick();
+        void retryButtonClick(String cityId);
 
     }
 

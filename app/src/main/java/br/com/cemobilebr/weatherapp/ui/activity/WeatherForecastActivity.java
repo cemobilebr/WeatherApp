@@ -29,6 +29,7 @@ import br.com.cemobilebr.weatherapp.ui.presenter.WeatherForecastPresenter;
 import br.com.cemobilebr.weatherapp.util.Utils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by cemobilebr.
@@ -185,5 +186,8 @@ public class WeatherForecastActivity extends AppCompatActivity implements Weathe
         emptyContainer.setVisibility(View.VISIBLE);
     }
 
-
+    @OnClick(R.id.retryButton)
+    void retryCitiesWeather() {
+        presenter.retryButtonClick(String.valueOf(cityId));
+    }
 }

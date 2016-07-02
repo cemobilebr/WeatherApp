@@ -43,6 +43,7 @@ public class SearchCityPresenter implements SearchCityContract.Presenter {
             @Override
             public void onError(Throwable e) {
                 e.printStackTrace();
+                view.showErrorLayout();
             }
 
             @Override
