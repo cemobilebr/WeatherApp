@@ -26,6 +26,7 @@ public class WeatherDataBase {
         for (String cityId: citiesIds) {
             if (i == position) {
                 citiesIds.remove(cityId);
+                break;
             }
             i++;
         }
