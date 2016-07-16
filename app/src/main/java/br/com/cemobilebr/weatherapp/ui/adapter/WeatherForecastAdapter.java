@@ -43,7 +43,8 @@ public class WeatherForecastAdapter extends BaseAdapter {
         if (convertView == null) {
             LayoutInflater localInflater = getLayoutInflater(context);
             // get layout from gridview_weather_forecast_item.xml
-            convertView = localInflater.inflate(R.layout.gridview_weather_forecast_item, null);
+            convertView = LayoutInflater.from(parent.getContext()).inflate(R.layout.gridview_weather_forecast_item, parent, false);
+            //convertView = localInflater.inflate(R.layout.gridview_weather_forecast_item, null);
             holder = new ViewHolder(convertView);
             convertView.setTag(holder);
 
@@ -52,26 +53,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
         }
 
         Forecast forecast = forecasts.get(position);
-
-        holder.dateTextView.setText(Utils.convertUnixTimeUtcToDateString(forecast.getDate(), Constants.DATE_FORMAT_WITHOUT_TIME));
-
-        String minimumTemperature = String.valueOf(Math.round(forecast.getTemperature().getMinimunDaily()));
-        holder.minimumTemperatureTextView.setText(
-                context.getString(
-                        R.string.temperature_configured,
-                        minimumTemperature));
-
-        String maximumTemperature = String.valueOf(Math.round(forecast.getTemperature().getMaximunDaily()));
-        holder.maximumTemperatureTextView.setText(
-                context.getString(
-                        R.string.temperature_configured,
-                        maximumTemperature));
-
-        Picasso.with(context)
-                .load(Utils.getDrawableResourceIdByName(context, Constants.ICON_PREFIX + forecast.getWeatherConditions().get(0).getIcon()))
-                .resize(40, 40)
-                .centerInside()
-                .into(holder.forecastIconImageView);
+        holder.apply(forecast);
 
         return convertView;
     }
@@ -97,7 +79,7 @@ public class WeatherForecastAdapter extends BaseAdapter {
         return 0;
     }
 
-    public static class ViewHolder {
+    public class ViewHolder {
 
         @BindView(R.id.dateTextView)
         protected TextView dateTextView;
@@ -113,6 +95,28 @@ public class WeatherForecastAdapter extends BaseAdapter {
 
         public ViewHolder(View view) {
             ButterKnife.bind(this, view);
+        }
+
+        public void apply(Forecast forecast) {
+            dateTextView.setText(Utils.convertUnixTimeUtcToDateString(forecast.getDate(), Constants.DATE_FORMAT_WITHOUT_TIME));
+
+            String minimumTemperature = String.valueOf(Math.round(forecast.getTemperature().getMinimunDaily()));
+            minimumTemperatureTextView.setText(
+                    context.getString(
+                            R.string.temperature_configured,
+                            minimumTemperature));
+
+            String maximumTemperature = String.valueOf(Math.round(forecast.getTemperature().getMaximunDaily()));
+            maximumTemperatureTextView.setText(
+                    context.getString(
+                            R.string.temperature_configured,
+                            maximumTemperature));
+
+            Picasso.with(context)
+                    .load(Utils.getDrawableResourceIdByName(context, Constants.ICON_PREFIX + forecast.getWeatherConditions().get(0).getIcon()))
+                    .resize(40, 40)
+                    .centerInside()
+                    .into(forecastIconImageView);
         }
     }
 }

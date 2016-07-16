@@ -34,8 +34,7 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.list_city_item, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_city_item, parent, false);
         return new ViewHolder(view);
     }
 
@@ -46,10 +45,10 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         }
 
         CityWeatherCondition city = cities.get(position);
-        Coordinates coordinates = city.getCoordinates();
+        if (city != null) {
+            holder.apply(city);
+        }
 
-        holder.cityCountryTextView.setText(city.getName() + Constants.SEPARATOR + city.getSystem().getCountryCode());
-        holder.coordinatesTextView.setText(coordinates.getLatitude() + Constants.SEPARATOR + coordinates.getLongitude());
     }
 
     @Override
@@ -68,6 +67,13 @@ public class CityListAdapter extends RecyclerView.Adapter<CityListAdapter.ViewHo
         public ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        public void apply(CityWeatherCondition city) {
+            Coordinates coordinates = city.getCoordinates();
+
+            cityCountryTextView.setText(city.getName() + Constants.SEPARATOR + city.getSystem().getCountryCode());
+            coordinatesTextView.setText(coordinates.getLatitude() + Constants.SEPARATOR + coordinates.getLongitude());
         }
     }
 }

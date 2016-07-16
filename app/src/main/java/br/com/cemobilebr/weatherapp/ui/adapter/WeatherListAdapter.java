@@ -46,20 +46,7 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
     public void onBindViewHolder(ViewHolder viewHolder, int position) {
         CityWeatherCondition city = cities.get(position);
         if (city != null) {
-            viewHolder.dateTimeTextView.setText(context.getString(R.string.last_update, Utils.convertUnixTimeUtcToDateString(city.getTimeDataCalculation(), Constants.DATE_FORMAT_WITH_TIME)));
-            viewHolder.cityTextView.setText(city.getName());
-            viewHolder.pressureTextView.setText(context.getString(R.string.pressure, String.valueOf(city.getMain().getPressure())));
-            viewHolder.windTextView.setText(context.getString(R.string.wind, String.valueOf(city.getWind().getSpeed())));
-            viewHolder.humidityTextView.setText(context.getString(R.string.humidity, String.valueOf(city.getMain().getHumidity())) + Constants.PERCENTAGE);
-            viewHolder.temperatureTextView.setText(context.getString(R.string.temperature, String.valueOf(Math.round(city.getMain().getTemperature()))));
-
-            WeatherCondition condition = city.getWeatherConditions().get(0);
-            viewHolder.descriptionTextView.setText(condition.getDescription());
-            Picasso.with(context)
-                    .load(Utils.getDrawableResourceIdByName(context, Constants.ICON_PREFIX + condition.getIcon()))
-                    .resize(100, 100)
-                    .centerInside()
-                    .into(viewHolder.iconImageView);
+            viewHolder.apply(city);
         }
     }
 
@@ -103,6 +90,23 @@ public class WeatherListAdapter extends RecyclerView.Adapter<WeatherListAdapter.
         ViewHolder(View view) {
             super(view);
             ButterKnife.bind(this, view);
+        }
+
+        void apply(CityWeatherCondition city) {
+            dateTimeTextView.setText(context.getString(R.string.last_update, Utils.convertUnixTimeUtcToDateString(city.getTimeDataCalculation(), Constants.DATE_FORMAT_WITH_TIME)));
+            cityTextView.setText(city.getName());
+            pressureTextView.setText(context.getString(R.string.pressure, String.valueOf(city.getMain().getPressure())));
+            windTextView.setText(context.getString(R.string.wind, String.valueOf(city.getWind().getSpeed())));
+            humidityTextView.setText(context.getString(R.string.humidity, String.valueOf(city.getMain().getHumidity())) + Constants.PERCENTAGE);
+            temperatureTextView.setText(context.getString(R.string.temperature, String.valueOf(Math.round(city.getMain().getTemperature()))));
+
+            WeatherCondition condition = city.getWeatherConditions().get(0);
+            descriptionTextView.setText(condition.getDescription());
+            Picasso.with(context)
+                    .load(Utils.getDrawableResourceIdByName(context, Constants.ICON_PREFIX + condition.getIcon()))
+                    .resize(100, 100)
+                    .centerInside()
+                    .into(iconImageView);
         }
     }
 
